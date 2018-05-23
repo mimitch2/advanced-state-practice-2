@@ -35,7 +35,7 @@ function CarListing(props) {
 }
 
 CarListing.propTypes = {
-  car: PropTypes.object
+  car: PropTypes.object.isRequired
 };
 
 export default CarListing;

@@ -10,9 +10,6 @@ class App extends Component {
     };
   }
 
-
-
-
   render() {
  
     const {carsForSale,vehicleData,allYears} = this.props.state;
@@ -20,12 +17,22 @@ class App extends Component {
 
     const filterCars = () => {
       // debugger;
-      if (this.state.currentMake && (!this.state.currentYear || this.state.currentYear === "Select Year")) {
+      if (this.state.currentMake && this.state.currentMake !== "Select Brand" &&
+          !this.state.currentYear) {
+
+        console.log("first");
         return carsForSale.filter(car => car.make === this.state.currentMake);
-      } else if (this.state.currentYear && (!this.state.currentMake || this.state.currentMake === "Select Brand")) {
+
+      } else if (this.state.currentYear && this.state.currentYear !== "Select Year" &&
+                 !this.state.currentMake) {
+        console.log("second");    
         return carsForSale.filter(car => car.year === this.state.currentYear);
-      } else if (this.state.currentMake && this.state.currentYear) {
-        return carsForSale.filter(car => car.make === this.state.currentMake && car.year === this.state.currentYear);
+        
+      } else if (this.state.currentMake && this.state.currentMake !== "Select Brand" &&
+                 this.state.currentYear && this.state.currentYear !== "Select Year") {
+        console.log("third");
+        return carsForSale.filter(car => car.make === this.state.currentMake && 
+                                         car.year === this.state.currentYear);
       } 
       return carsForSale; 
     };
@@ -231,7 +238,7 @@ class App extends Component {
                         <select className="form-control"
                           onChange={(e) => {this.setState({ currentMake: e.target.value });}}>
                           <option>Select Brand</option>
-                          {vehicleData.map((brand) => {return <option value={brand.value}>{brand.title}</option>;})}
+                          {vehicleData.map((brand, index) => {return <option value={brand.value} key={index}>{brand.title}</option>;})}
                         </select>
                       </div>
                       <div className="form-group select">
