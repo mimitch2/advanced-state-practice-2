@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CarListing from "./components/CarListing";
+import PropTypes from "prop-types";
 
 class App extends Component {
   constructor() {
@@ -13,28 +14,18 @@ class App extends Component {
   render() {
  
     const {carsForSale,vehicleData,allYears} = this.props.state;
-    // console.log(carsForSale);
 
     const filterCars = () => {
-      // debugger;
-      if (this.state.currentMake && this.state.currentMake !== "Select Brand" &&
-          !this.state.currentYear) {
-
-        console.log("first");
-        return carsForSale.filter(car => car.make === this.state.currentMake);
-
-      } else if (this.state.currentYear && this.state.currentYear !== "Select Year" &&
-                 !this.state.currentMake) {
-        console.log("second");    
-        return carsForSale.filter(car => car.year === this.state.currentYear);
-        
-      } else if (this.state.currentMake && this.state.currentMake !== "Select Brand" &&
-                 this.state.currentYear && this.state.currentYear !== "Select Year") {
-        console.log("third");
-        return carsForSale.filter(car => car.make === this.state.currentMake && 
-                                         car.year === this.state.currentYear);
+      let carArray = [...carsForSale];
+      
+      if (this.state.currentMake && this.state.currentMake !== "Select Brand") {
+        carArray = carArray.filter(car => car.make === this.state.currentMake);
       } 
-      return carsForSale; 
+
+      if (this.state.currentYear && this.state.currentYear !== "Select Year") {
+        carArray = carArray.filter(car => car.year === this.state.currentYear);
+      }
+      return carArray;
     };
   
     console.log(filterCars());
@@ -572,5 +563,9 @@ class App extends Component {
   }
 
 }
+
+App.propTypes = {
+  state: PropTypes.object 
+};
 
 export default App;
